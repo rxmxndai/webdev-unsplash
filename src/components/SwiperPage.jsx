@@ -5,11 +5,10 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 // Import Swiper styles
 import "swiper/css/bundle";
 import "swiper/css/autoplay";
-import ImageList from "./ImageList";
+
 import { useEffect, useState } from "react";
 import { getAllMyImages, removeFromStorage } from "../apicalls/imageCall";
 
-// box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgb(209, 213, 219) 0px 0px 0px 1px inset;
 
 
 const Container = styled.div`
@@ -131,12 +130,6 @@ const SwiperPage = () => {
         :
         ""
       }
-
-      <Title> Featured Images from Unsplash </Title>
-
-      <ImageList query={"anime"} perPage={14} page={1} />
-
-
     </Container>
   )
 }

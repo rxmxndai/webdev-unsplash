@@ -1,5 +1,4 @@
-import './App.css';
-import Navbar from './components/Navbar';
+import Navbar from './components/Navigation/Navbar';
 import Form from './pages/Form';
 import Homepage from './pages/Homepage';
 

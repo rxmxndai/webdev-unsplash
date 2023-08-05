@@ -1,10 +1,9 @@
+import { useNavigate } from "react-router-dom"
 import styled from "styled-components"
 
 const Container = styled.div`
     padding: 30px 50px;
     border: 1px solid#444;
-    position: fixed;
-    top: calc(45% - 60px);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -33,13 +32,21 @@ const Button = styled.button`
   }
 `
 
-const AlertBox = ({message, title, setSuccess}) => {
+const AlertBox = ({ message, title, setSuccess }) => {
+
+  const navigate = useNavigate();
+
   return (
     <Container>
-        <Title> {title} </Title>
+      <Title> {title} </Title>
 
-        <Message> {message} </Message>
-        <Button onClick={() => setSuccess(false)}> OK </Button>
+      <Message> {message} </Message>
+      {setSuccess &&
+        <Button onClick={() => {
+          setSuccess(false)
+          navigate("/");
+        }}> OK </Button>
+      }
     </Container>
   )
 }
