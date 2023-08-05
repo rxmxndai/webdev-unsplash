@@ -86,6 +86,7 @@ const SwiperPage = () => {
   useEffect(() => {
     const getData = () => {
       const result = getAllMyImages();
+      result.reverse();
       setData(result);
     }
 

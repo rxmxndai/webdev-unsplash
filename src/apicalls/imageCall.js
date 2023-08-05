@@ -17,8 +17,11 @@ export const getSomeImages = async ({ query = "nature", page = 1, perPage = 14 }
             orderBy: "relevant"
         })
         .then(result => {
-            const data = result.response.results;
-            return data;
+            if (result.response.results) {
+                const data = result.response.results;
+                return data;
+            }
+            return [];
         })
         .catch(err => {
             console.log(err);
