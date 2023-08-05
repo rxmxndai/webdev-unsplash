@@ -7,7 +7,7 @@ export const unsplashApi = createApi({
 
 // or use axios with base url of 'https://api.unsplash.com/photos/?client_id=YOUR_ACCESS_KEY'
 
-export const getSomeImages = async ({ query = "DBZ", page = 1, perPage = 14 }) => {
+export const getSomeImages = async ({ query = "nature", page = 1, perPage = 14 }) => {
     return unsplashApi.search
         .getPhotos({
             query,

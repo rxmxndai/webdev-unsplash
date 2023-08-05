@@ -21,11 +21,13 @@ const Wrapper = styled.div`
 `
 
 const Left = styled.div`
-
+  flex: 1;
 `
 
 const Right = styled.div`
-  
+  flex: 1;
+  display: flex;
+  justify-content: end;
 `
 
 const Point = styled.a`
@@ -37,7 +39,10 @@ const Point = styled.a`
 `
 
 const SearchField = styled.div`
-
+  flex: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `
 
 

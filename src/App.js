@@ -4,6 +4,7 @@ import Form from './pages/Form';
 import Homepage from './pages/Homepage';
 
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
+import SearchPage from './pages/SearchPage';
 
 const Layout = () => {
   return (
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
       {
         path: "/add-image",
         element: <Form />
+      },
+      {
+        path: "/search/:query",
+        element: <SearchPage />
       }
     ]
   }

@@ -55,8 +55,8 @@ const Image = styled.img`
   user-select: none;
 `
 
-const Info = styled.h3`
-user-select: none;
+const Info = styled.a`  
+  user-select: none;
 `
 const Button = styled.button`
   padding: 10px;
@@ -134,7 +134,7 @@ const SwiperPage = () => {
 
       <Title> Featured Images from Unsplash </Title>
 
-      <ImageList />
+      <ImageList query={"anime"} perPage={14} page={1} />
 
 
     </Container>

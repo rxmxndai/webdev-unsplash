@@ -12,18 +12,18 @@ const Container = styled.div`
 
 
 
-const ImageList = () => {
+const ImageList = ({query, page, perPage}) => {
 
   const [data, setData] = useState([]);
 
   useEffect(() => {
     const getData = async ( ) => {
-      const images = await getSomeImages({query: "anime", perPage: 14});
+      const images = await getSomeImages({query, perPage, page});
       setData(images)
     }
 
     getData();
-  }, [])
+  }, [query, page, perPage])
 
 
   return (
