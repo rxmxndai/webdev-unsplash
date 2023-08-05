@@ -8,6 +8,7 @@ const Container = styled.div`
   display: flex;
   border-radius: 2px;
   margin: 20px 10px;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 
   &:hover {
     transform: translate(2);
@@ -40,7 +41,7 @@ const Image = styled.img`
   width: 100%;
   cursor: pointer;
   transition: transform 0.3s ease;
-  transform: scale(0.8);
+  transform: scale(0.9);
   border-radius: 2px;
 
   &:hover {
@@ -65,11 +66,12 @@ const ImageCard = ({ data }) => {
       <Wrapper>
         <ImageContainer>
           <Image
-            src={data?.image}
+            alt={data.alt_description}
+            src={data?.urls.regular}
           />
         </ImageContainer>
 
-        <Title> {data.title} </Title>
+        <Title> {data.alt_description.slice(0, 35) + "..."} </Title>
       </Wrapper>
 
     </Container>

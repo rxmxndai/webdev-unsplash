@@ -1,8 +1,14 @@
+import styled from "styled-components"
 
+const Container = styled.div`
+  
+`
 
 const SearchBox = () => {
   return (
-    <div>SearchBox</div>
+    <Container>
+      Search
+    </Container>
   )
 }
 

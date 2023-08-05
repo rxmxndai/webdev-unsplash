@@ -1,4 +1,5 @@
 import styled from "styled-components"
+import SearchBox from "./SearchBox"
 
 const Container = styled.div`
   border-bottom: 0.5px solid black;
@@ -49,7 +50,7 @@ const Navbar = () => {
         </Left>
         {/* Search with the local state of this component */}
         <SearchField >
-
+            <SearchBox />
         </SearchField>
 
         <Right>

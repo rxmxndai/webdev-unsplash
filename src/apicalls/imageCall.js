@@ -5,9 +5,17 @@ export const unsplashApi = createApi({
 });
 
 
-export const getSomeImages = async () => {
+// or use axios with base url of 'https://api.unsplash.com/photos/?client_id=YOUR_ACCESS_KEY'
+
+export const getSomeImages = async ({ query = "DBZ", page = 1, perPage = 14 }) => {
     return unsplashApi.search
-        .getPhotos({ query: "cat", orientation: "landscape" })
+        .getPhotos({
+            query,
+            page,
+            perPage,
+            orientation: "portrait",
+            orderBy: "relevant"
+        })
         .then(result => {
             const data = result.response.results;
             return data;
@@ -18,4 +26,46 @@ export const getSomeImages = async () => {
         });
 }
 
+
+export const getAllMyImages = () => {
+    const rawData = localStorage.getItem("images");
+    const parsedData = JSON.parse(rawData);
+    if (Array.isArray(parsedData) && parsedData.length > 0) {
+        return parsedData;
+    }
+    return [];
+}
+
+
+
+export const addImageToStorage = async ({ data }) => {
+    const storage = getAllMyImages();
+    data.id = storage.length + 1;
+    storage.push(data);
+
+    try {
+        localStorage.setItem("images", JSON.stringify(storage));
+        return true;
+    }
+    catch (err) {
+        console.log(err);
+        return false;
+    }
+}
+
+
+export const removeFromStorage = (id) => {
+    const storage = getAllMyImages();
+    const newStorage = storage.filter( st => st.id !== id );
+
+    try {
+        localStorage.setItem("images", JSON.stringify(newStorage));
+        return true;
+    }
+    catch (err) {
+        console.log(err);
+        return false;
+    }
+
+}
 

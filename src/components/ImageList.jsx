@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import { getSomeImages } from "../apicalls/imageCall"
 
 const Container = styled.div`
-  margin: 50px;
+  margin: 20px 50px;
   height: 30vh;
   display: flex;
   flex-wrap: wrap;
@@ -12,29 +12,29 @@ const Container = styled.div`
 
 
 
-const ImageList = ({data}) => {
+const ImageList = () => {
 
-  // const [data, setData] = useState([]);
+  const [data, setData] = useState([]);
 
-  // useEffect(() => {
-  //   const getData = async ( ) => {
-  //     const images = await getSomeImages();
-  //     setData(images)
-  //   }
+  useEffect(() => {
+    const getData = async ( ) => {
+      const images = await getSomeImages({query: "anime", perPage: 14});
+      setData(images)
+    }
 
-  //   getData();
-  // }, [])
+    getData();
+  }, [])
 
 
   return (
     <Container>
-        { Array(2).fill().map(ar => (
-          data.length > 0 && data?.map(obj => (
-            <div key={obj.id}>
-              <ImageCard data={obj} />
-            </div>
-          ))
-        )) }
+      {
+        data.length > 0 && data?.map(obj => (
+          <div key={obj.id}>
+            <ImageCard data={obj} />
+          </div>
+        ))
+      }
     </Container>
   )
 }

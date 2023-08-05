@@ -6,7 +6,8 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import "swiper/css/bundle";
 import "swiper/css/autoplay";
 import ImageList from "./ImageList";
-import { data } from "../data/data";
+import { useEffect, useState } from "react";
+import { getAllMyImages, removeFromStorage } from "../apicalls/imageCall";
 
 // box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgb(209, 213, 219) 0px 0px 0px 1px inset;
 
@@ -21,7 +22,15 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 10px;
-  border: rgba(0, 0, 0, 0.1) 0px 10px 50px;
+  border: 1px solid transparent;
+  transition: transform 0.3s ease;
+  border-radius: 10px;
+  position: relative;
+
+  &:hover {
+   
+    border: 1px solid #111;
+  }
 `
 
 const Title = styled.h2`
@@ -29,7 +38,7 @@ const Title = styled.h2`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-top: 50px;
+  padding: 50px 0px 20px 0px; 
 `
 
 
@@ -47,42 +56,85 @@ const Image = styled.img`
 `
 
 const Info = styled.h3`
+user-select: none;
+`
+const Button = styled.button`
+  padding: 10px;
+  background: transparent;
+  color: red;
+  cursor: pointer;
+  border: none;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  opacity: 0%;
+  border-radius: 10px 10px 0px 0px;
+
+  &:hover {
+    opacity: 100%;
+    background-color: red;
+    color: white;
+  }
 `
 
 
-
 const SwiperPage = () => {
+
+  const [data, setData] = useState([])
+  const [update, setUpdate] = useState(false);
+
+  // fetch created images from local storage 
+  useEffect(() => {
+    const getData = () => {
+      const result = getAllMyImages();
+      setData(result);
+    }
+
+    getData();
+  }, [update])
+
+
   return (
     <Container>
 
-      <Title> My Images </Title>
+      {Array.isArray(data) && data.length > 0
+        ?
+        <>
+          <Title> My Images </Title>
 
-      <Swiper
-        modules={[Navigation, Pagination, Scrollbar, A11y]}
-        spaceBetween={80}
-        slidesPerView={3}
-        navigation
-        // pagination={{ clickable: true }}
-        autoplay={{ delay: 1000 }}
-        loop={true}
-        grabCursor
-      >
-        {data.map(imageData => (
-          <SwiperSlide key={imageData.id} >
-            <Wrapper >
-              <ImageContainer>
-                <Image src={imageData.image} />
-              </ImageContainer>
-              <Info> {imageData.title} </Info>
-            </Wrapper>
-          </SwiperSlide>
-        ))}
+          <Swiper
+            modules={[Navigation, Pagination, Scrollbar, A11y]}
+            spaceBetween={50}
+            slidesPerView={4}
+            navigation
+            autoplay={{ delay: 100 }}
+          // grabCursor
+          >
+            {data.map(imageData => (
+              <SwiperSlide key={imageData.id} >
+                <Wrapper >
+                  <Button onClick={() => {
+                    const result = removeFromStorage(imageData.id)
+                    if (result) setUpdate(!update);
+                  }} > Delete </Button>
+                  <ImageContainer>
+                    <Image src={imageData.image} />
+                  </ImageContainer>
+                  <Info> {imageData.title} </Info>
+                </Wrapper>
+              </SwiperSlide>
+            ))}
 
-      </Swiper>
+          </Swiper>
+        </>
 
-      <Title> Featured Images </Title>
+        :
+        ""
+      }
 
-        <ImageList data={data} />
+      <Title> Featured Images from Unsplash </Title>
+
+      <ImageList />
 
 
     </Container>
