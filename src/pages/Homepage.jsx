@@ -3,6 +3,7 @@ import SwiperPage from "../components/SwiperPage"
 import ImageList from "../components/Image/ImageList"
 import { getSomeImages } from "../apicalls/imageCall"
 import { useEffect, useState } from "react"
+import { device } from "../Media"
 
 const Container = styled.div`
   
@@ -18,6 +19,10 @@ const Title = styled.h2`
   align-items: center;
   justify-content: center;
   padding: 50px 0px 20px 0px; 
+
+  @media ${device.mobile} {
+      font-size: 20px;
+  }
 `
 
 

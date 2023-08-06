@@ -8,6 +8,7 @@ import "swiper/css/autoplay";
 
 import { useEffect, useState } from "react";
 import { getAllMyImages, removeFromStorage } from "../apicalls/imageCall";
+import { device } from "../Media";
 
 
 
@@ -44,6 +45,9 @@ const Title = styled.h2`
 const ImageContainer = styled.div`
   flex: 1;
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `
 
 const Image = styled.img`
@@ -76,8 +80,25 @@ const Button = styled.button`
   }
 `
 
+const P = styled.p`
+  display: none;
+  color: blueviolet;
+  font-size: small;
+
+  @media ${device.mobile} {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+`
+
 
 const SwiperPage = () => {
+
+
+  const [slidesPerView, setSlidesPerView] = useState(
+    window.matchMedia(device.mobile).matches ? 1 : 3
+  );
 
   const [data, setData] = useState([])
   const [update, setUpdate] = useState(false);
@@ -94,6 +115,20 @@ const SwiperPage = () => {
   }, [update])
 
 
+
+  // Check for window resolutiona and set slides per view for responsive UI 
+  useEffect(() => {
+    const handleResize = () => {
+      setSlidesPerView(window.matchMedia(device.mobile).matches ? 1 : 3);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+
   return (
     <Container>
 
@@ -105,8 +140,8 @@ const SwiperPage = () => {
           <Swiper
             modules={[Navigation, Pagination, Scrollbar, A11y]}
             spaceBetween={50}
-            slidesPerView={4}
-            navigation
+            slidesPerView={slidesPerView}
+            navigation={ slidesPerView === 1 ? false : true }
             autoplay={{ delay: 100 }}
           // grabCursor
           >
@@ -126,6 +161,7 @@ const SwiperPage = () => {
             ))}
 
           </Swiper>
+          <P > { `<< Swipe >>` } </P>
         </>
 
         :

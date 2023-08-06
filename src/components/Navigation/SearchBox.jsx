@@ -3,16 +3,16 @@ import { useNavigate } from "react-router-dom"
 import styled from "styled-components"
 
 const Container = styled.div`
-  width: 50%;
+  padding: 10px;
 `
 
 const Form = styled.form`
-    width: 100%;
+    
 `
 
 const Input = styled.input`
     width: 100%;
-    padding: 10px 30px;
+    padding: 10px 20px;
     border-radius: 12px;
     border: 1px solid #cccccc;
     font-size: 16px;
@@ -26,11 +26,8 @@ const Input = styled.input`
 `
 
 const Button = styled.button`
-    padding: 10px 30px;
     display: none;
 `
-
-
 
 const SearchBox = () => {
 
@@ -45,10 +42,10 @@ const SearchBox = () => {
 
   return (
     <Container>
-       <Form onSubmit={(e) => handleSearch(e)}>
-          <Input placeholder="Search here..." value={query} onChange={(e) => setQuery(e.target.value)} />
-          <Button type="submit" > Search </Button> 
-       </Form>
+      <Form onSubmit={(e) => handleSearch(e)}>
+        <Input placeholder="Search here..." value={query} onChange={(e) => setQuery(e.target.value)} />
+        <Button type="submit" > Search </Button>
+      </Form>
     </Container>
   )
 }

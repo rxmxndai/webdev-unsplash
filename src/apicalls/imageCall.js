@@ -43,7 +43,7 @@ export const getAllMyImages = () => {
 
 export const addImageToStorage = async ({ data }) => {
     const storage = getAllMyImages();
-    data.id = storage.length + 1;
+    data.id = storage[storage.length - 1].id + 1;
     storage.push(data);
 
     try {

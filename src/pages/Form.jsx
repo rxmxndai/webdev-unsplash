@@ -2,6 +2,7 @@ import { useState } from "react"
 import styled from "styled-components"
 import { addImageToStorage } from "../apicalls/imageCall"
 import Modal from "../components/AlertBox.jsx"
+import { device } from "../Media"
 
 const Container = styled.div`
     display: flex;
@@ -9,6 +10,10 @@ const Container = styled.div`
     justify-content: center;
     margin: 120px;
     position: relative;
+    @media ${device.mobile} {
+      margin: 120px 20px 20px 20px;
+    }
+    
 `
 
 const Wrapper = styled.div`
@@ -20,9 +25,16 @@ const Wrapper = styled.div`
   margin: 50px;
   gap: 20px;
   box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+  @media ${device.mobile} {
+    padding: 30px;
+    margin: 30px;
+  }
 `
 
 const Title = styled.h2`
+  @media ${device.mobile} {
+    font-size: 20px;
+  }
 `
 
 const MyForm = styled.form`
@@ -55,6 +67,9 @@ const Input = styled.input`
     background-color: #B9D9EB;
     border: blue 1px solid;
   }
+  @media ${device.mobile} {
+    font-size: 14px;
+  }
 `
 
 const Button = styled.button`
@@ -73,10 +88,14 @@ const Button = styled.button`
 
 const Form = () => {
 
+
+  // Form data state managemnet
   const [form, setForm] = useState({ title: "", image: "" });
 
+  // Error on data input
   const [error, setError] = useState({ title: false, image: false })
 
+  // Modal for success
   const [success, setSuccess] = useState(false)
 
   const handleChange = (e) => {
@@ -84,6 +103,9 @@ const Form = () => {
     setForm({ ...form, [e.target.name]: e.target.value })
   }
 
+
+
+  // Add Image to Local Storage Logic
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -123,12 +145,12 @@ const Form = () => {
           <MyForm onSubmit={handleSubmit}>
             <FormControl>
               <Label htmlFor="title" > Title </Label>
-              <Input error={error.title} type="text" name="title" value={form.title} onChange={(e) => handleChange(e)} />
+              <Input error={error.title} type="text" name="title" value={form?.title} onChange={(e) => handleChange(e)} />
             </FormControl>
 
             <FormControl>
               <Label htmlFor="image" > Image Url </Label>
-              <Input error={error.image} type="text" name="image" value={form.image} onChange={(e) => handleChange(e)} />
+              <Input error={error.image} type="text" name="image" value={form?.image} onChange={(e) => handleChange(e)} />
               {error.image && <button style={{ color: "red", border: 'none' }} > Needs a valid Image Url </button>}
             </FormControl>
 

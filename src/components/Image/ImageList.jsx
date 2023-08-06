@@ -1,12 +1,16 @@
 import styled from "styled-components"
 import { useEffect } from "react"
 import ImageCard from "./ImageCard"
+import { device } from "../../Media"
 
 const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 10px 50px;
+  @media ${device.mobile} {
+    padding: 0px 20px;
+  }
 `
 
 const Wrapper = styled.div`
