@@ -7,6 +7,11 @@ export const unsplashApi = createApi({
 
 // or use axios with base url of 'https://api.unsplash.com/photos/?client_id=YOUR_ACCESS_KEY'
 
+
+
+/* 
+    Get dynamic pagination data from calling functions to get new queried images
+*/
 export const getSomeImages = async ({ query = "nature", page = 1, perPage = 14 }) => {
     return unsplashApi.search
         .getPhotos({
@@ -30,6 +35,11 @@ export const getSomeImages = async ({ query = "nature", page = 1, perPage = 14 }
 }
 
 
+
+
+/* 
+    Get all images from localstorage and returns parsed array of images
+*/
 export const getAllMyImages = () => {
     const rawData = localStorage.getItem("images");
     const parsedData = JSON.parse(rawData);
@@ -41,9 +51,14 @@ export const getAllMyImages = () => {
 
 
 
+
+/* 
+    Adding data to LocalStorage
+    Needs an object of image: URL and title: String as parameters
+*/
 export const addImageToStorage = async ({ data }) => {
     const storage = getAllMyImages();
-    data.id = storage[storage.length - 1].id + 1;
+    data.id = storage[storage.length - 1]?.id + 1 || 0;
     storage.push(data);
 
     try {
@@ -57,8 +72,15 @@ export const addImageToStorage = async ({ data }) => {
 }
 
 
+
+
+/* 
+    Accepts an id of image created and stored in local storage
+    Will delete the image data if exists 
+*/
 export const removeFromStorage = (id) => {
     const storage = getAllMyImages();
+    // filter the particular image object and set new Storage
     const newStorage = storage.filter( st => st.id !== id );
 
     try {
