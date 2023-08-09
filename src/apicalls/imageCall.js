@@ -95,7 +95,7 @@ export const getSomeImages = async ({ query = "nature", page = 1, perPage }) => 
         })
         // check how many results availabele in that keyword search
         .then(result => {
-            console.log("First Check!");
+            // console.log("First Check!");
             try {
                 data = { totalImages: result.response.total }
                 // console.log(data);
@@ -113,7 +113,7 @@ export const getSomeImages = async ({ query = "nature", page = 1, perPage }) => 
             }
         })
         .then(newResult => {
-            console.log("Second Check!");
+            // console.log("Second Check!");
             if (newResult.response.results) {
                 data.images = newResult.response.results;
                 return data;

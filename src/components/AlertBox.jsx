@@ -4,7 +4,6 @@ import { device } from "../Media"
 
 const Container = styled.div`
     padding: 20px 30px;
-    border: 1px solid #444;
     display: flex;
     flex-direction: column;
     align-items: center;

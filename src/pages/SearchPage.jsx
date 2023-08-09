@@ -86,7 +86,7 @@ const SearchPage = () => {
   return (
     <Container>
         {
-          data.length < 0 ?
+          data.length > 0 ?
           <>
           <ImageList data={data}  />
           <Wrap>
