@@ -32,7 +32,7 @@ const Homepage = () => {
 
   useEffect(() => {
     const getData = async () => {
-      const images = await getSomeImages({ query: "computer", page: 1, perPage: 14 });
+      const { totalImages, images } = await getSomeImages({ query: "computer", page: 1, perPage: 14 });
       setData(images)
     }
 

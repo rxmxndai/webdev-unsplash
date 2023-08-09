@@ -85,7 +85,7 @@ const ImageCard = ({ data }) => {
           />
         </ImageContainer>
 
-        <Title> {data.alt_description.slice(0, 35) + "..."} </Title>
+        <Title> {data.alt_description?.slice(0, 35) + "..."} </Title>
       </Wrapper>
 
     </Container>

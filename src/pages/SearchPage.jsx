@@ -51,29 +51,22 @@ const SearchPage = () => {
 
   const [page, setPage] = useState(1);
 
-  const [found, setFound] = useState(true);
-
   const [data, setData] = useState([]);
 
+  const [totalImages, setTotalImages] = useState(0);
 
 
-  useEffect(() => {
-    if (found === false) {
-      setData([]);
-    }
-  }, [found])
 
 
   // fetch new data on every new search-query
   useEffect(() => {
     const getData = async () => {
-      const images = await getSomeImages({ query, page, perPage: 14 }); 
-      if (images.length <= 0) {
-        setFound(false);
-        return;
-      }
-      setFound(true);
-      setData(images)
+        const { totalImages, images } = await getSomeImages({ query, page, perPage: 14 });
+        if (images.length <= 0) {
+          return;
+        }
+        setData(images)
+        setTotalImages(totalImages);
     }
 
     getData();
@@ -85,40 +78,38 @@ const SearchPage = () => {
     if (update === "prev" && (page - 1) > 0) {
       setPage(page - 1);
     }
-    else if (update === "next" && (page + 1 <= 10)) {
+    else if (update === "next" && !( page+1 > 10 )) {
       setPage(page + 1);
     }
   }
 
-
-
   return (
     <Container>
-      {found ? (
-        <>
-        <ImageList data={data} found={found} /> 
-        <Wrap>
-          <Filter>
-            <Button
-              disabled={page === 1 && true}
-              onClick={() => handlePagination("prev")} > Prev </Button>
-            <PageNow value={page} onChange={(e) => {
-              if (e.target.value < 11) {
-                setPage(e.target.value)
-              }
-              else {
-                setPage(10)
-              }
-            }} />
-            <Button
-              disabled={page === 10 && true}
-              onClick={() => handlePagination("next")} > Next </Button>
-          </Filter>
-        </Wrap>
+        {
+          data.length < 0 ?
+          <>
+          <ImageList data={data}  />
+          <Wrap>
+            <Filter>
+              <Button
+                disabled={page === 1 ? true : false}
+                onClick={() => handlePagination("prev")} > Prev </Button>
+              <PageNow disabled value={page} onChange={(e) => {
+                if (e.target.value < 11) {
+                  setPage(e.target.value)
+                }
+                else {
+                  setPage(10)
+                }
+              }} />
+              <Button
+                disabled={totalImages < (14 * page) || page === 10 ? true : false}
+                onClick={() => handlePagination("next")} > Next </Button>
+            </Filter>
+          </Wrap>
         </>
-      )
-    : <AlertBox message={`No data for search query ${query}!`} title="Search Not found"  />
-    }
+        : <AlertBox message={`No data for search query "${query}!" \nor Rate Limit from the server!`} title="Search Not found" /> 
+        }
     </Container>
   )
 }
